@@ -54,9 +54,9 @@ async function savePhotoToDb(index, dataUrl) {
 }
 
 function loadBundledPhotos() {
-  setPhoto(0, "photos/photo1.jpg", false);
-  setPhoto(1, "photos/photo2.jpg", false);
-  setPhoto(2, "photos/photo3.jpg", false);
+  setPhoto(0, "photos/photo1.jpeg", false);
+  setPhoto(1, "photos/photo2.jpeg", false);
+  setPhoto(2, "photos/photo3.jpeg", false);
 }
 
 async function loadSavedPhotos() {
