@@ -1,0 +1,77 @@
+import java.sql.*;
+import java.util.Scanner;
+
+public class LibraryJDBC {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter Oracle Username: ");
+        String user = sc.nextLine().trim();
+
+        System.out.print("Enter Oracle Password: ");
+        String password = sc.nextLine().trim();
+
+        System.out.print("Enter Oracle Service Name (default: XEPDB1): ");
+        String serviceName = sc.nextLine().trim();
+        if (serviceName.isEmpty()) {
+            serviceName = "XEPDB1";
+        }
+
+        String url = "jdbc:oracle:thin:@localhost:1521/" + serviceName;
+
+        try {
+            Connection con = DriverManager.getConnection(url, user, password);
+            System.out.println("\nOracle Connected Successfully!");
+
+            Statement st = con.createStatement();
+
+            // 4. Display all books from BOOK
+            System.out.println("\n--- ALL BOOKS ---");
+            ResultSet rs = st.executeQuery("SELECT Book_id, Title, Publisher_name FROM BOOK ORDER BY Book_id");
+            while (rs.next()) {
+                System.out.println(
+                    rs.getInt("Book_id") + " | " +
+                    rs.getString("Title") + " | " +
+                    rs.getString("Publisher_name")
+                );
+            }
+
+            // 5. Search a book using Book_id
+            System.out.print("\nEnter Book ID: ");
+            int searchId = sc.nextInt();
+
+            PreparedStatement ps = con.prepareStatement(
+                "SELECT Book_id, Title, Publisher_name FROM BOOK WHERE Book_id = ?"
+            );
+            ps.setInt(1, searchId);
+            ResultSet r = ps.executeQuery();
+
+            System.out.println("\n--- SEARCH RESULT ---");
+            if (r.next()) {
+                System.out.println("Book ID: " + r.getInt("Book_id"));
+                System.out.println("Title: " + r.getString("Title"));
+                System.out.println("Publisher: " + r.getString("Publisher_name"));
+            } else {
+                System.out.println("No book found with ID: " + searchId);
+            }
+
+            // 6. Display all borrowers from BORROWER
+            System.out.println("\n--- ALL BORROWERS ---");
+            ResultSet rsBorrower = st.executeQuery("SELECT Card_no, Name, Address, Phone FROM BORROWER ORDER BY Card_no");
+            while (rsBorrower.next()) {
+                System.out.println(
+                    rsBorrower.getInt("Card_no") + " | " +
+                    rsBorrower.getString("Name") + " | " +
+                    rsBorrower.getString("Address") + " | " +
+                    rsBorrower.getString("Phone")
+                );
+            }
+
+            con.close();
+            sc.close();
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
