@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff1f6">
+  <meta name="description" content="A tiny birthday universe made with love.">
+  <title>For Penguin & Pukuli ♡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-glow glow-a"></div><div class="background-glow glow-b"></div>
+  <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#home"><span>♡</span> little universe</a>
+    <button class="music-button" id="musicButton" type="button" title="Toggle gentle sound effects">♫ <span>sound off</span></button>
+  </header>
+
+  <main>
+    <section class="screen hero active" id="home">
+      <div class="eyebrow">✦ A birthday surprise made just for you ✦</div>
+      <div class="orb-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orb">♡</div><span class="floating-heart fh-one">♡</span><span class="floating-heart fh-two">✧</span><span class="floating-heart fh-three">✦</span></div>
+      <p class="tiny-label">28 OCTOBER · YOUR DAY</p>
+      <h1>Happy birthday,<br><em id="heroNickname">Penguin, my Pukuli.</em></h1>
+      <p class="hero-copy">A little place on the internet, made with love,<br class="desktop-only"> for one very special person.</p>
+      <button class="primary-button" data-go="story">Open your surprise <span>→</span></button>
+      <p class="micro-copy">made of memories, little notes & lots of love ♡</p>
+    </section>
+
+    <section class="screen content-screen" id="story">
+      <div class="section-label">01 / THE LITTLE THINGS</div>
+      <h2>Some people make<br>ordinary days <em>glow.</em></h2>
+      <p class="intro">And you, Penguin, have a way of making the little things feel special.</p>
+      <div class="qualities" id="qualities">
+        <article class="quality-card"><span>☼</span><h3>Your laugh</h3><p>The kind of sunshine a cloudy day needs.</p></article>
+        <article class="quality-card"><span>✿</span><h3>Your heart</h3><p>A softness that makes the world feel kinder.</p></article>
+        <article class="quality-card"><span>☾</span><h3>Your presence</h3><p>My favorite moments are the ones with you.</p></article>
+      </div>
+      <div class="section-actions"><button class="text-button" data-back="home">← Back</button><button class="primary-button" data-go="memories">Our memories <span>→</span></button></div>
+    </section>
+
+    <section class="screen content-screen" id="memories">
+      <div class="section-label">02 / OUR LITTLE GALLERY</div>
+      <h2>Little moments,<br><em>big feelings.</em></h2>
+      <p class="intro">Add photos from your device. You can change the captions in Customize.</p>
+      <div class="photo-grid" id="photoGrid">
+        <label class="photo-card"><input type="file" accept="image/*" data-photo="0"><img alt="Memory 1" hidden><span class="photo-placeholder"><b>♡</b><strong>Our first memory</strong><small>tap to add a photo</small></span><span class="photo-caption">a moment to keep</span></label>
+        <label class="photo-card"><input type="file" accept="image/*" data-photo="1"><img alt="Memory 2" hidden><span class="photo-placeholder"><b>✿</b><strong>Our kind of happy</strong><small>tap to add a photo</small></span><span class="photo-caption">my favorite smile</span></label>
+        <label class="photo-card"><input type="file" accept="image/*" data-photo="2"><img alt="Memory 3" hidden><span class="photo-placeholder"><b>☾</b><strong>A day to remember</strong><small>tap to add a photo</small></span><span class="photo-caption">you + me</span></label>
+      </div>
+      <div class="section-actions"><button class="text-button" data-back="story">← Back</button><button class="primary-button" data-go="notes">Little notes <span>→</span></button></div>
+    </section>
+
+    <section class="screen content-screen" id="notes">
+      <div class="section-label">03 / OPEN WHENEVER</div>
+      <h2>Little notes for<br><em>my Pukuli.</em></h2>
+      <p class="intro">Pick a note. You can write and add as many as you like in Customize.</p>
+      <div class="note-grid" id="noteGrid"></div>
+      <div class="section-actions"><button class="text-button" data-back="memories">← Back</button><button class="primary-button" data-go="letter">Your letter <span>→</span></button></div>
+    </section>
+
+    <section class="screen content-screen letter-screen" id="letter">
+      <div class="section-label">04 / FROM MY HEART</div>
+      <h2>A letter for<br><em>my favorite person.</em></h2>
+      <p class="intro">Tap the envelope to open your letter.</p>
+      <button class="envelope-wrap" id="envelope" type="button" aria-label="Open the birthday letter">
+        <span class="envelope-flap"></span><span class="envelope-front"><span>for you, always</span><b>♡</b></span>
+        <span class="paper-preview"><small>A LITTLE LETTER</small><strong>To my Penguin...</strong><span>with all my love ♡</span></span>
+      </button>
+      <article class="letter-content" id="letterContent">
+        <div class="letter-date">28 OCTOBER · A NOTE FOR YOU</div>
+        <h3 id="letterHeading">To my Penguin, my Pukuli,</h3>
+        <div id="letterBody"></div>
+        <p class="signature">Always cheering for you,<br><em id="signatureName">your person ♡</em></p>
+      </article>
+      <div class="section-actions"><button class="text-button" data-back="notes">← Back</button><button class="primary-button" data-go="finale">One last surprise <span>→</span></button></div>
+    </section>
+
+    <section class="screen finale" id="finale">
+      <div class="confetti" id="confetti" aria-hidden="true"></div>
+      <div class="flower-art" aria-hidden="true">✿</div>
+      <div class="section-label">05 / YOUR DAY, YOUR MAGIC</div>
+      <h2>The world is better<br><em>with you in it.</em></h2>
+      <p class="finale-copy" id="finaleMessage">May your birthday be full of gentle mornings, big reasons to smile, and dreams that come closer every day.</p>
+      <div class="birthday-stamp">HAPPY<br><strong>BIRTHDAY</strong><span>♡</span></div>
+      <p class="closing-line">With all my love, <em>Penguin & Pukuli's person.</em></p>
+      <button class="primary-button" id="replayButton">Start again ↺</button>
+      <p class="micro-copy">made with love, just for you ♡</p>
+    </section>
+  </main>
+
+  <nav class="progress" aria-label="Page progress" id="progress"></nav>
+  <button class="customize-launch" id="openEditor">✎ Customize this surprise</button>
+
+  <div class="modal-backdrop" id="editorBackdrop" hidden>
+    <section class="editor" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+      <div class="editor-head"><div><p class="section-label">YOUR PERSONAL EDITOR</p><h2 id="editorTitle">Make it <em>yours.</em></h2></div><button class="close-editor" id="closeEditor" aria-label="Close editor">×</button></div>
+      <p class="editor-intro">Changes are saved in this browser. For a permanent public version, also edit the files as described in README.md.</p>
+      <div class="editor-tabs"><button class="editor-tab active" data-tab="tabBasics">Basics</button><button class="editor-tab" data-tab="tabNotes">Notes</button><button class="editor-tab" data-tab="tabPhotos">Photos</button><button class="editor-tab" data-tab="tabLetter">Letter</button></div>
+      <div class="editor-panel active" id="tabBasics">
+        <label>Nickname / name<input id="editNickname" value="Penguin and Pukuli"></label>
+        <label>Your name or signature<input id="editSignature" value="your person ♡"></label>
+        <label>Birthday date<input id="editDate" value="28 October"></label>
+        <label>Final birthday message<textarea id="editFinale" rows="3"></textarea></label>
+        <label>Accent color<input id="editColor" type="color" value="#d36f95"></label>
+      </div>
+      <div class="editor-panel" id="tabNotes">
+        <p class="field-hint">Each note has a title and message. Use the buttons to add or remove notes.</p>
+        <div id="notesEditor"></div><button class="secondary-button" id="addNote" type="button">＋ Add a note</button>
+      </div>
+      <div class="editor-panel" id="tabPhotos">
+        <p class="field-hint">Pick photos here or tap the photo cards on the gallery screen. Photos are stored only in this browser session/local storage where possible; large images may not persist.</p>
+        <div id="photoEditor"></div>
+      </div>
+      <div class="editor-panel" id="tabLetter">
+        <label>Letter heading<input id="editLetterHeading"></label>
+        <label>Letter text<textarea id="editLetterBody" rows="10"></textarea></label>
+        <p class="field-hint">Use a blank line between paragraphs.</p>
+      </div>
+      <div class="editor-actions"><button class="secondary-button" id="resetEdits" type="button">Reset default text</button><button class="primary-button" id="saveEdits" type="button">Save changes ✓</button></div>
+      <p class="save-status" id="saveStatus" role="status"></p>
+    </section>
+  </div>
+
+  <div class="note-modal-backdrop" id="noteBackdrop" hidden>
+    <article class="note-modal" role="dialog" aria-modal="true" aria-labelledby="openedNoteTitle">
+      <button class="close-editor" id="closeNote" aria-label="Close note">×</button>
+      <div class="note-icon">♡</div><p class="section-label">A LITTLE NOTE FOR YOU</p><h2 id="openedNoteTitle"></h2><p id="openedNoteBody"></p>
+      <button class="primary-button" id="noteOkay">Keep this in your heart ♡</button>
+    </article>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
