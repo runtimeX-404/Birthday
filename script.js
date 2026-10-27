@@ -335,10 +335,24 @@ function makeConfetti() {
   const box = document.getElementById("confetti"); if (box.dataset.ready) return; box.dataset.ready = "true";
   for (let i = 0; i < 48; i++) { const p = document.createElement("i"); p.className = "confetti-piece"; p.style.left = `${Math.random() * 100}%`; p.style.animationDelay = `${Math.random() * 4}s`; p.style.animationDuration = `${3 + Math.random() * 4}s`; box.appendChild(p); }
 }
-document.getElementById("musicButton").addEventListener("click", () => {
-  const label = document.querySelector("#musicButton span");
-  label.textContent = label.textContent === "sound off" ? "sound effects soon" : "sound off";
+
+const musicButton = document.getElementById("musicButton");
+const birthdayMusic = document.getElementById("birthdayMusic");
+
+musicButton.addEventListener("click", async () => {
+  if (birthdayMusic.paused) {
+    try {
+      await birthdayMusic.play();
+      musicButton.querySelector("span").textContent = "sound off";
+    } catch (error) {
+      console.error("Music playback failed:", error);
+    }
+  } else {
+    birthdayMusic.pause();
+    musicButton.querySelector("span").textContent = "sound on";
+  }
 });
+
 applySettings();
 showScreen("home");
 loadBundledPhotos();
