@@ -26,6 +26,65 @@ let state = clone(DEFAULTS);
 let uploadedPhotos = [null, null, null];
 let currentScreen = "home";
 
+// Store uploaded gallery photos in IndexedDB so they survive page reloads.
+const PHOTO_DB_NAME = "penguinPukuliBirthdayPhotos";
+const PHOTO_STORE = "photos";
+function openPhotoDb() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(PHOTO_DB_NAME, 1);
+    request.onupgradeneeded = () => {
+      if (!request.result.objectStoreNames.contains(PHOTO_STORE)) {
+        request.result.createObjectStore(PHOTO_STORE);
+      }
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+async function savePhotoToDb(index, dataUrl) {
+  const db = await openPhotoDb();
+  await new Promise((resolve, reject) => {
+    const tx = db.transaction(PHOTO_STORE, "readwrite");
+    tx.objectStore(PHOTO_STORE).put(dataUrl, index);
+    tx.oncomplete = resolve;
+    tx.onerror = () => reject(tx.error);
+    tx.onabort = () => reject(tx.error);
+  });
+  db.close();
+}
+async function loadSavedPhotos() {
+  try {
+    const db = await openPhotoDb();
+    const photos = await new Promise((resolve, reject) => {
+      const tx = db.transaction(PHOTO_STORE, "readonly");
+      const store = tx.objectStore(PHOTO_STORE);
+      const requests = [0, 1, 2].map(index => new Promise((res, rej) => {
+        const req = store.get(index);
+        req.onsuccess = () => res(req.result || null);
+        req.onerror = () => rej(req.error);
+      }));
+      Promise.all(requests).then(resolve, reject);
+    });
+    db.close();
+    photos.forEach((photo, index) => { if (photo) setPhoto(index, photo, false); });
+  } catch (e) {
+    console.warn("Saved photos could not be loaded in this browser.", e);
+  }
+}
+async function clearSavedPhotos() {
+  try {
+    const db = await openPhotoDb();
+    await new Promise((resolve, reject) => {
+      const tx = db.transaction(PHOTO_STORE, "readwrite");
+      tx.objectStore(PHOTO_STORE).clear();
+      tx.oncomplete = resolve;
+      tx.onerror = () => reject(tx.error);
+      tx.onabort = () => reject(tx.error);
+    });
+    db.close();
+  } catch (e) { console.warn("Saved photos could not be cleared.", e); }
+}
+
 try {
   const saved = localStorage.getItem("penguinPukuliSiteSettings");
   if (saved) state = { ...clone(DEFAULTS), ...JSON.parse(saved) };
@@ -126,13 +185,18 @@ document.querySelectorAll("[data-photo]").forEach(input => input.addEventListene
   reader.onload = () => setPhoto(Number(input.dataset.photo), reader.result);
   reader.readAsDataURL(file);
 }));
-function setPhoto(index, dataUrl) {
+function setPhoto(index, dataUrl, persist = true) {
   uploadedPhotos[index] = dataUrl;
   const card = document.querySelectorAll(".photo-card")[index];
   const img = card.querySelector("img");
   img.src = dataUrl; img.hidden = false;
   card.querySelector(".photo-placeholder").style.opacity = "0";
   renderPhotoEditor();
+  if (persist) savePhotoToDb(index, dataUrl).catch(error => {
+    console.warn("Photo could not be saved in this browser.", error);
+    const status = document.getElementById("saveStatus");
+    if (status) status.textContent = "Photo displayed, but this browser couldn't save it permanently.";
+  });
 }
 
 const backdrop = document.getElementById("editorBackdrop");
@@ -212,6 +276,7 @@ document.getElementById("saveEdits").addEventListener("click", () => {
 document.getElementById("resetEdits").addEventListener("click", () => {
   state = clone(DEFAULTS); uploadedPhotos = [null, null, null];
   try { localStorage.removeItem("penguinPukuliSiteSettings"); } catch (e) {}
+  clearSavedPhotos();
   applySettings();
   document.querySelectorAll(".photo-card").forEach(card => { card.querySelector("img").hidden = true; card.querySelector("img").removeAttribute("src"); card.querySelector(".photo-placeholder").style.opacity = "1"; });
   openEditor();
@@ -234,3 +299,4 @@ document.getElementById("musicButton").addEventListener("click", () => {
 });
 applySettings();
 showScreen("home");
+loadSavedPhotos();
