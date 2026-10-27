@@ -94,8 +94,16 @@ async function clearSavedPhotos() {
 
 try {
   const saved = localStorage.getItem("penguinPukuliSiteSettings");
-  if (saved) state = { ...clone(DEFAULTS), ...JSON.parse(saved) };
-} catch (e) { /* local storage may be unavailable */ }
+  if (saved) {
+    state = {
+      ...clone(DEFAULTS),
+      ...JSON.parse(saved),
+      notes: clone(DEFAULTS.notes)
+    };
+  }
+} catch (e) {
+  /* local storage may be unavailable */
+}
 
 const screenIds = ["home", "story", "memories", "notes", "letter", "finale"];
 const progress = document.getElementById("progress");
