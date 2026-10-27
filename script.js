@@ -338,18 +338,27 @@ function makeConfetti() {
 
 const musicButton = document.getElementById("musicButton");
 const birthdayMusic = document.getElementById("birthdayMusic");
+const label = musicButton?.querySelector("span");
 
-musicButton.addEventListener("click", async () => {
+// Try to play automatically when the page opens
+birthdayMusic?.play().then(() => {
+  if (label) label.textContent = "sound off";
+}).catch(() => {
+  // Browser blocked autoplay; wait for the visitor to click
+  if (label) label.textContent = "play music";
+});
+
+musicButton?.addEventListener("click", async () => {
   if (birthdayMusic.paused) {
     try {
       await birthdayMusic.play();
-      musicButton.querySelector("span").textContent = "sound off";
+      if (label) label.textContent = "sound off";
     } catch (error) {
       console.error("Music playback failed:", error);
     }
   } else {
     birthdayMusic.pause();
-    musicButton.querySelector("span").textContent = "sound on";
+    if (label) label.textContent = "play music";
   }
 });
 
