@@ -3,3 +3,22 @@
 @keyframes enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}@keyframes twinkle{0%,100%{opacity:.12;transform:scale(.7) rotate(0)}50%{opacity:.7;transform:scale(1.1) rotate(25deg)}}@keyframes fall{to{transform:translateY(110vh) rotate(600deg)}}
 @media(max-width:650px){.topbar{width:calc(100% - 28px);height:65px}.screen{min-height:calc(100svh - 130px);padding-top:24px;padding-bottom:68px}.orb-art{width:155px;height:155px}.orb{width:86px;height:86px;font-size:38px}.orbit{width:136px;height:60px}.orbit-two{width:148px;height:73px}.qualities{grid-template-columns:1fr;max-width:340px;gap:9px}.quality-card{display:grid;grid-template-columns:42px 1fr;column-gap:13px;text-align:left;padding:14px;align-items:center}.quality-card>span{grid-row:span 2;margin:0}.quality-card h3{font-size:17px;margin:0 0 3px}.quality-card p{font-size:11px}.photo-grid{gap:8px}.photo-card{border-radius:12px;aspect-ratio:.7}.photo-placeholder strong{font-size:12px}.photo-placeholder small{font-size:9px}.photo-placeholder b{font-size:27px}.photo-caption{font-size:9px;padding:8px 2px}.note-grid{grid-template-columns:1fr;max-width:390px}.note-card{min-height:auto;padding:17px}.note-card .note-mark{margin-bottom:6px}.note-card h3{font-size:18px}.note-card p{margin-bottom:8px}.section-actions{gap:16px}.envelope-wrap{height:215px}.envelope-front{height:165px}.envelope-flap{top:50px;height:130px}.paper-preview{height:160px}.letter-content{padding:23px 20px}.letter-content h3{font-size:23px}.letter-content p{font-size:13px}.customize-launch{right:10px;bottom:10px;padding:11px 13px}.editor{padding:18px;max-height:92svh}.editor-head h2{font-size:30px}.editor-tabs{overflow-x:auto}.editor-tab{padding:10px 9px;white-space:nowrap}.editor-actions{align-items:stretch}.editor-actions>*{flex:1}.editor-actions .primary-button{font-size:10px}.desktop-only{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+
+/* Make long birthday notes scrollable on phones and desktops */
+.note-modal-backdrop {
+  overflow-y: auto;
+  align-items: flex-start;
+}
+
+.note-modal {
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: auto;
+}
+
+.note-modal p:not(.section-label) {
+  overflow-wrap: anywhere;
+}
